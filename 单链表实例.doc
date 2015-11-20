@@ -1,0 +1,92 @@
+#include<iostream>
+using namespace std;
+class CNode
+{
+public:
+    CNode *next;
+    int data;
+    CNode()
+    {
+        next=NULL;
+    }
+};
+class CList
+{
+private :
+    CNode *Head;
+     int Nodesum;
+public:
+    CList()
+    {
+        Head=NULL;
+        Nodesum=0;
+    }
+    CNode* MoveTrail()
+    {
+        CNode* pTmp=Head;
+        for(int i=1;i<Nodesum;i++)
+        {
+            pTmp=pTmp->next;
+        }
+        return pTmp;
+    }
+    void AddNode(CNode *pNode)
+    {
+        if(Nodesum==0)
+            Head=pNode;
+        else
+        {
+            CNode*pTrail=MoveTrail();
+
+            pTrail->next=pNode;
+        }
+        Nodesum++;
+
+    }
+    void PassList()
+    {
+        if(Nodesum>0)
+        {
+            CNode*pTmp=Head;
+            cout<<pTmp->data;
+            for(int i=1 ; i<Nodesum;i++)
+            {
+                pTmp=pTmp->next;
+                cout<<pTmp->data;
+            }
+        }
+    }
+    ~CList()
+    {
+        if(Nodesum>0)
+        {
+            CNode*pDelete=Head;
+            CNode*pTmp=NULL;
+            for(int i=0;i<Nodesum;i++)
+            {
+              pTmp=pDelete->next;
+              delete pDelete;
+              pDelete=pTmp;
+            }
+            Nodesum=0;
+            pDelete=NULL;
+            pTmp=NULL;
+
+
+        }
+        Head=NULL;
+    }
+};
+int main()
+{
+    CList list;
+    for(int i=0;i<5;i++)
+    {
+        CNode*pNode=new CNode();
+        pNode->data=i;
+        list.AddNode(pNode);
+    }
+    list.PassList();
+    cout<<endl;
+    return 0;
+}
